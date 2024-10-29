@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction, Router } from "express";
+import { createUser } from "../controller/user";
 
 const router = Router();
 
-router.post("/api/auth/login", (req: any, res: Response) => {
-  res.status(201).send({ msg: "successfully log in" });
-});
+router.post("/api/auth/login", createUser);
 
 export default router;
