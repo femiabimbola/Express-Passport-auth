@@ -4,7 +4,7 @@ export const createUserValidationSchema = {
   fullname: {
     isLength: {
       options: { min: 4, max: 32 },
-      errorMessage: "name cannot be less than 3",
+      errorMessage: "fullname cannot be less than 3",
     },
     notEmpty: { errorMessage: "name can not be empty" },
     isString: { errorMessage: "name is a string" },
