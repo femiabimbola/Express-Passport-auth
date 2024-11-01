@@ -1,15 +1,17 @@
 import { Request, Response, NextFunction, Router } from "express";
-import { validationResult, body, matchedData } from "express-validator";
+import { validationResult, matchedData } from "express-validator";
 
-export const createUser = async (req: any, res: Response) => {
+export const createUser = async (req: Request, res: Response) => {
   const result = validationResult(req);
   console.log(result);
-  // if (!result.isEmpty()) {
-  //   return res.status(400).send({ error: result.array().map((err) => err) });
-  // }
-
-  const { body } = req;
+  if (!result.isEmpty()) {
+    return res.status(400).send({ error: result.array().map((err) => err) });
+  }
   const data = matchedData(req);
   console.log(data);
-  res.status(201).send({ msg: "You have successfully log in" });
+  return res.status(201).send({ msg: "You have successfully log in" });
+};
+
+export const signIn = async (req: Request, res: Response) => {
+  return res.status(201).send({ msg: "You have successfully log in" });
 };
