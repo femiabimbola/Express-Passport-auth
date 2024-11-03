@@ -1,4 +1,7 @@
-import { db } from "./index";
+// import  db  from "./index";
+
+// import { dbclient } from "./index";
+import {client} from "./index"
 
 const createTables = `
   CREATE TABLE IF NOT EXISTS users (
@@ -38,10 +41,22 @@ const createTables = `
   );
 `;
 
-// const createDatabaseTables = async () => {
-//   await db.query(createTables).then(() => {
-//     console.log("Tables successfully created");
-//   });
-// };
 
-// createDatabaseTables();
+  const createDatabaseTables =  () => {
+    client.connect()
+    .then(() => {
+      console.log("connecred to postgres database")
+      client.query(createTables,(err, result) => 
+        {
+        if (err) {
+          console.error("Error inserting data", err);
+        } else {
+          console.log("Table created successfully");
+        }
+  
+        client.end();
+      })
+    })
+  };
+
+createDatabaseTables();
