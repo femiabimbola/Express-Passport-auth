@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Router } from "express";
 import { validationResult, matchedData } from "express-validator";
-import { createUserModel } from "../model/userModel";
+import { createUserModel, getAllUserModel } from "../model/userModel";
 
 export const createUser = async (req: Request, res: Response) => {
   const result = validationResult(req);
@@ -30,4 +30,13 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const signIn = async (req: Request, res: Response) => {
   return res.status(201).send({ msg: "You have successfully log in" });
+};
+
+export const getAllUser = async (req: Request, res: Response) => {
+  try {
+    const userObject = await getAllUserModel();
+    return res.status(200).send({ data: userObject, message: "You have all your useer" });
+  } catch (error) {
+    return res.status(200).send({ message: "Could not get the user" });
+  }
 };
