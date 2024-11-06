@@ -8,15 +8,11 @@ interface DbProps {
   text?: any;
   params?: any;
 }
-const connectionString =
-  process.env.NODE_ENV === "test"
-    ? process.env.TEST_DB
-    : process.env.DATABASE_URL;
+const connectionString = process.env.NODE_ENV === "test" ? process.env.TEST_DB : process.env.DATABASE_URL;
 
-const pool = new Pool({ connectionString });
+export const pool = new Pool({ connectionString });
 
 export const client = new Client({ connectionString });
-
 
 // export const dbclient = ({ text, params }: any)  => {
 //   client
@@ -24,7 +20,7 @@ export const client = new Client({ connectionString });
 //   .then(() => {
 //     console.log("connected to postgreSQL database");
 //     console.log(params)
-//     client.query(text, params, (err, result) => 
+//     client.query(text, params, (err, result) =>
 //       {
 //       if (err) {
 //         console.error("Error inserting data", err);
@@ -34,7 +30,7 @@ export const client = new Client({ connectionString });
 
 //       client.end();
 //     });
-    
+
 //   })
 //   .catch((error) => console.error("error connecting to sql", error));
 // }

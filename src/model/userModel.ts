@@ -8,7 +8,7 @@ export const createUserModel = async (params: any) => {
   try {
     await client.connect().then(() => console.log("connected to postgres database"));
     const result = await client.query(queryText, newUser);
-    client.end().then(() => console.log("Connection to PostgreSQL closed"));
+    // client.end().then(() => console.log("Connection to PostgreSQL closed"));
     return result.rows;
   } catch (error) {
     console.log(`error occured creating user ${error}`);
@@ -25,7 +25,7 @@ export const getAllUserModel = async () => {
 
     const result = await client.query("SELECT * FROM users ORDER BY id ASC");
 
-    client.end().then(() => console.log("Connection to PostgreSQL closed"));
+    // client.end().then(() => console.log("Connection to PostgreSQL closed"));
     return result.rows;
   } catch (error) {
     console.log(`error occured getting all user ${error}`);
@@ -41,7 +41,7 @@ export const getAUserModel = async (id: number) => {
   try {
     await client.connect().then(() => console.log("connected to postgres database"));
     const result = await client.query(queryText, [id]);
-    client.end().then(() => console.log("Connection to PostgreSQL closed"));
+    // client.end().then(() => console.log("Connection to PostgreSQL closed"));
     return result.rows;
   } catch (error) {
     console.log(`error occured getting a user ${error}`);

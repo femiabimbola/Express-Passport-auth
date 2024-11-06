@@ -1,4 +1,5 @@
 import { client } from "../db";
+import { pool } from "../db";
 
 export const createloanModel = (params: any) => {
   try {
@@ -20,5 +21,22 @@ export const createloanModel = (params: any) => {
     });
   } catch (error) {
     console.log(`error occured creating user ${error}`);
+  }
+};
+
+export const getAllloanModel = async () => {
+  try {
+    await client.connect().then(() => console.log("connected to postgres database"));
+
+    const result = await client.query("SELECT * FROM users ORDER BY id ASC");
+
+    // client.end().then(() => console.log("Connection to PostgreSQL closed"));
+    return result.rows;
+  } catch (error) {
+    console.log(`error occured getting all user ${error}`);
+  } finally {
+    client.end().then(() => {
+      console.log("Connection to PostgreSQL closed");
+    });
   }
 };
