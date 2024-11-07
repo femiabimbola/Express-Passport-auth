@@ -1,18 +1,34 @@
-
 import { pool } from "../db";
 
 export const createloanModel = async (params: any) => {
   try {
-    const { firstName, lastName, email, password, phone, address, status, isAdmin } = params;
-    const newUser = [firstName, lastName, email, password, phone, address, status, isAdmin];
-    const queryText =
-      "INSERT INTO loans (firstname, lastname, email, password, phone, address, status, isAdmin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
-      const result = await pool.query(queryText, newUser);
-      return result.rows;
+    const {
+      firstName, lastName, email, amount, tenor, status,
+      repaid, paymentInstallment, balance, interest,
+    } = params;
+    const newLoan = [
+      firstName,
+      lastName,
+      email,
+      amount,
+      tenor,
+      status,
+      repaid,
+      paymentInstallment,
+      balance,
+      interest,
+    ];
+    const queryText = 'INSERT INTO loans (firstname, lastname, email, amount, tenor, status, repaid, paymentinstallment, balance, interest) VALUES  ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *';
+    const { rows } = await pool.query(queryText, newLoan);
+    if (rows) {
+      return rows[0];
+    }
   } catch (error) {
-    console.log(`error occured creating user ${error}`);
+    console.error(error);
+    return false;
   }
 };
+
 
 export const getAllloanModel = async () => {
   try {

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, Router } from "express";
 import { validationResult, matchedData } from "express-validator";
 import { createUserModel, getAllUserModel, getAUserModel } from "../model/userModel";
+import bcrypt from "bcryptjs"
 
 export const createUser = async (req: Request, res: Response) => {
   const result = validationResult(req);
@@ -8,12 +9,14 @@ export const createUser = async (req: Request, res: Response) => {
     return res.status(400).send({ error: result.array().map((err) => err) });
   }
   const data = matchedData(req);
-  const { firstName, lastName, email, password, phone, address } = req.body;
+  // const { firstName, lastName, email, password, phone, address } = req.body;
+  const { firstName, lastName, email, password, phone, address } = data
+  const hashedPassword = bcrypt.hashSync(password, 10);
   const newUser = {
     firstName,
     lastName,
     email,
-    password,
+    password : hashedPassword,
     phone,
     address,
     status: "unverified",
