@@ -1,4 +1,5 @@
 import { client } from "../db";
+import { pool } from "../db";
 
 export const createUserModel = async (params: any) => {
   const { firstName, lastName, email, password, phone, address, status, isAdmin } = params;
@@ -6,8 +7,8 @@ export const createUserModel = async (params: any) => {
   const queryText =
     "INSERT INTO users (firstname, lastname, email, password, phone, address, status, isAdmin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
   try {
-    await client.connect().then(() => console.log("connected to postgres database"));
-    const result = await client.query(queryText, newUser);
+    // await client.connect().then(() => console.log("connected to postgres database"));
+    const result = await pool.query(queryText, newUser);
     // client.end().then(() => console.log("Connection to PostgreSQL closed"));
     return result.rows;
   } catch (error) {
@@ -21,9 +22,7 @@ export const createUserModel = async (params: any) => {
 
 export const getAllUserModel = async () => {
   try {
-    await client.connect().then(() => console.log("connected to postgres database"));
-
-    const result = await client.query("SELECT * FROM users ORDER BY id ASC");
+    const result = await pool.query("SELECT * FROM users ORDER BY id ASC");
 
     // client.end().then(() => console.log("Connection to PostgreSQL closed"));
     return result.rows;
@@ -39,8 +38,8 @@ export const getAllUserModel = async () => {
 export const getAUserModel = async (id: number) => {
   const queryText = "SELECT * FROM loans WHERE id = $1";
   try {
-    await client.connect().then(() => console.log("connected to postgres database"));
-    const result = await client.query(queryText, [id]);
+    // await client.connect().then(() => console.log("connected to postgres database"));
+    const result = await pool.query(queryText, [id]);
     // client.end().then(() => console.log("Connection to PostgreSQL closed"));
     return result.rows;
   } catch (error) {

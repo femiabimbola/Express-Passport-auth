@@ -26,9 +26,9 @@ export const createloanModel = (params: any) => {
 
 export const getAllloanModel = async () => {
   try {
-    await pool.connect().then(() => console.log("database connected"));
+    // await pool.connect().then(() => console.log("database connected"));
     const result = await pool.query("SELECT * FROM users ORDER BY id ASC");
-    pool.end();
+    // pool.end();
     return result.rows;
   } catch (error) {
     console.log(`error occured getting all user ${error}`);
