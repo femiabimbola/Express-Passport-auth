@@ -8,7 +8,7 @@ export const createloanModel = async (params: any) => {
     } = params;
     const newLoan = [
       firstName,
-      lastName,
+lastName,
       email,
       amount,
       tenor,
@@ -28,6 +28,28 @@ export const createloanModel = async (params: any) => {
     return false;
   }
 };
+
+export const findLoanByEmail = async(email: string) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM loans WHERE email = $1', [email]);
+   return rows
+  } catch (error:any) {
+    console.error(`Error in finding loan${error.message}`);
+    return false;
+  }
+}
+
+export const findLoanById = async(id: number) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM loans WHERE id = $1', [id]);
+    if (rows) {
+      return rows[0];
+    }
+  } catch (error: any) {
+    console.error(`Error in finding loan by id${error.message}`);
+    return false;
+  }
+}
 
 
 export const getAllloanModel = async () => {

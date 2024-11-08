@@ -18,12 +18,14 @@ export const createloanValidationSchema = {
     isEmail: { errorMessage: "Enter a valid email" },
   },
 
-  address: {
-    notEmpty: { errorMessage: "Address cannot be empty" },
-  },
-
-  phone: {
-    notEmpty: { errorMessage: "Phone number cannot be empty" },
+  amount : {
+    notEmpty: { errorMessage: "amount cannot be empty" },
     isInt: { errorMessage: "only number allowed" },
   },
+
+  tenor : {
+    notEmpty: { errorMessage: "tenor cannot be empty" },
+    isInt: { errorMessage: "only number allowed" },
+  },
+
 };
