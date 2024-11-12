@@ -1,6 +1,7 @@
 import { validationResult, matchedData } from "express-validator";
 import { createloanModel, getAllloanModel } from "../model/loanModel";
 import { Request, Response, NextFunction, Router } from "express";
+import { loanPayment } from "../utils/loanUtils";
 
 export const createLoan = async (req: Request, res: Response) => {
   const result = validationResult(req);
@@ -9,8 +10,19 @@ export const createLoan = async (req: Request, res: Response) => {
   }
   const data = matchedData(req);
   //find the way int wont be less than or more than
-  const { firstname, lastname, email, amount, tenor, status, repaid, paymentInstallment, balance, interest } = req.body;
-  const newLoan= {firstname, lastname, email, amount, tenor, status, repaid, paymentInstallment, balance, interest };
+  const { firstname, lastname, email, amount, tenor } = req.body;
+
+  const amountInt = parseInt(amount, 10);
+  const tenorInt = parseInt(tenor, 10);
+
+ console.log(tenorInt)
+ console.log(amountInt)
+// @ts-ignore
+  const { paymentInstallment, interest, balance } = loanPayment(amountInt, tenorInt);
+
+  const newLoan = {
+    firstname, lastname, email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
+  };
 
   try {
     const userObject = await createloanModel(newLoan);

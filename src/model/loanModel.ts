@@ -3,7 +3,6 @@ import { pool } from "../db";
 export const createloanModel = async (params: any) => {
     const {firstname, lastname, email,amount, tenor, status, repaid, paymentInstallment, balance, interest} = params;
 
-    console.log( `${firstname} line 3`)
     const newLoan = [
       firstname,
       lastname,
