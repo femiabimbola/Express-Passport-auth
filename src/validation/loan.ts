@@ -1,5 +1,5 @@
 export const createloanValidationSchema = {
-  firstName: {
+  firstname: {
     isLength: {
       options: { min: 4, max: 32 },
       errorMessage: "firstame cannot be less than 3",
@@ -8,7 +8,7 @@ export const createloanValidationSchema = {
     isString: { errorMessage: "firstname is a string" },
   },
 
-  lastName: {
+  lastname: {
     notEmpty: { errorMessage: "lastname can not be empty" },
     isString: { errorMessage: "lastname is a string" },
   },
@@ -27,5 +27,19 @@ export const createloanValidationSchema = {
     notEmpty: { errorMessage: "tenor cannot be empty" },
     isInt: { errorMessage: "only number allowed" },
   },
+
+  paymentInstallment: {
+    notEmpty: { errorMessage: "tenor cannot be empty" },
+    isFloat: { errorMessage: "only number allowed" },
+  },
+
+  interest: {
+    notEmpty: { errorMessage: "tenor cannot be empty" },
+    isFloat: { errorMessage: "only number allowed" },
+  },
+
+  balance: {
+    notEmpty: { errorMessage: "tenor cannot be empty" },
+  }
 
 };

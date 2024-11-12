@@ -9,8 +9,8 @@ export const createLoan = async (req: Request, res: Response) => {
   }
   const data = matchedData(req);
   //find the way int wont be less than or more than
-  const { firstName, lastName, email, amount, tenor,} = data;
-  const newLoan= {firstName, lastName, email, amount, tenor,};
+  const { firstname, lastname, email, amount, tenor, status, repaid, paymentInstallment, balance, interest } = req.body;
+  const newLoan= {firstname, lastname, email, amount, tenor, status, repaid, paymentInstallment, balance, interest };
 
   try {
     const userObject = await createloanModel(newLoan);
