@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Router } from "express";
 import { validationResult, matchedData } from "express-validator";
-import { createUserModel, getAllUserModel, getAUserModel } from "../model/userModel";
+import { createUserModel, findAphone, findAUser, getAllUserModel, getAUserModel } from "../model/userModel";
 import bcrypt from "bcryptjs"
 
 export const createUser = async (req: Request, res: Response) => {
@@ -9,8 +9,15 @@ export const createUser = async (req: Request, res: Response) => {
     return res.status(400).send({ error: result.array().map((err) => err) });
   }
   const data = matchedData(req);
-  // const { firstName, lastName, email, password, phone, address } = req.body;
+  
   const { firstName, lastName, email, password, phone, address } = data
+  
+  const emailexist = await findAUser(email)
+  if(emailexist) return res.status(400).send({ msg: "User exists" });
+
+  const phoneexist = await findAphone(phone)
+  if(phoneexist) return res.status(400).send({ msg: "Phone exist" });
+
   const hashedPassword = bcrypt.hashSync(password, 10);
   const newUser = {
     firstName,

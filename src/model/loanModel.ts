@@ -54,7 +54,7 @@ export const findLoanById = async (id: number) => {
 
 export const getAllloanModel = async () => {
   try {
-    const result = await pool.query("SELECT * FROM users ORDER BY id ASC");
+    const result = await pool.query("SELECT * FROM loans ORDER BY id ASC");
     return result.rows;
   } catch (error) {
     console.log(`error occured getting all user ${error}`);

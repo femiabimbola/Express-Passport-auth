@@ -27,6 +27,29 @@ export const getAllUserModel = async () => {
   } 
 };
 
+export const findAUser = async(email : string) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (rows) {
+      return rows[0];
+    }
+  } catch (error) {
+    return false;
+  }
+}
+
+
+export const findAphone = async(phone:number) =>{
+  try {
+    const { rows } = await pool.query('SELECT * FROM users WHERE phone = $1', [phone]);
+    if (rows) {
+      return rows[0];
+    }
+  } catch (error) {
+    return false;
+  }
+}
+
 export const getAUserModel = async (id: number) => {
   const queryText = "SELECT * FROM loans WHERE id = $1";
   try {

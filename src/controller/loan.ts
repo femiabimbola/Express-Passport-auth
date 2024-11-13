@@ -15,9 +15,6 @@ export const createLoan = async (req: Request, res: Response) => {
   const amountInt = parseInt(amount, 10);
   const tenorInt = parseInt(tenor, 10);
 
- console.log(tenorInt)
- console.log(amountInt)
-// @ts-ignore
   const { paymentInstallment, interest, balance } = loanPayment(amountInt, tenorInt);
 
   const newLoan = {
@@ -35,8 +32,8 @@ export const createLoan = async (req: Request, res: Response) => {
 export const getAllLoan = async (req: Request, res: Response) => {
   try {
     const userObject = await getAllloanModel();
-    return res.status(200).send({ message: "You have all your useer", data: userObject });
+    return res.status(200).send({ message: "You have all your loans", data: userObject });
   } catch (error) {
-    return res.status(200).send({ message: "Could not get the user" });
+    return res.status(200).send({ message: "Could not get all the loans" });
   }
 };

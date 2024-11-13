@@ -7,12 +7,12 @@
  * Monthly Repayment Amount, Loan Interest, Balance
  */
 
-interface loanPaymentProps {
-  amount: number;
-  months: number;
-}
+// interface loanPaymentProps {
+//   amount: number;
+//   months: number;
+// }
 
-export const loanPayment = ({amount, months} : any) => {
+export const loanPayment = (amount: number, months:number) => {
   const i = (0.1 / 12); // interest rate is 10%
   const monthlyPayment = amount * i * ((1 + i) ** months) / (((1 + i) ** months) - 1);
   const totalInterest = (monthlyPayment * months) - amount;
