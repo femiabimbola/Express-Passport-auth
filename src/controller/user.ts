@@ -42,6 +42,8 @@ export const signIn = async (req: Request, res: Response) => {
 };
 
 export const getAllUser = async (req: Request, res: Response) => {
+  console.log(req.session) 
+  console.log(req.session.id)
   try {
     const userObject = await getAllUserModel();
     return res.status(200).send({ message: "You have all your useer", data: userObject });
