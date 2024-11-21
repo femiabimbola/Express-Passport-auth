@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Router } from "express";
 import { validationResult, matchedData } from "express-validator";
-import { createUserModel, findAphone, findAUser, getAllUserModel, getAUserModel } from "../model/userModel";
+import { createUserModel, findAphone, findAUserByEmail, getAllUserModel } from "../model/userModel";
 import bcrypt from "bcryptjs"
 
 export const createUser = async (req: Request, res: Response) => {
@@ -12,7 +12,7 @@ export const createUser = async (req: Request, res: Response) => {
   
   const { firstName, lastName, email, password, phone, address } = data
   
-  const emailexist = await findAUser(email)
+  const emailexist = await findAUserByEmail(email)
   if(emailexist) return res.status(400).send({ msg: "User exists" });
 
   const phoneexist = await findAphone(phone)
@@ -38,12 +38,13 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const signIn = async (req: Request, res: Response) => {
+  console.log(req.session) 
+  console.log(req.session.id)
   return res.status(201).send({ msg: "You have successfully log in" });
 };
 
 export const getAllUser = async (req: Request, res: Response) => {
-  console.log(req.session) 
-  console.log(req.session.id)
+ 
   try {
     const userObject = await getAllUserModel();
     return res.status(200).send({ message: "You have all your useer", data: userObject });
@@ -52,12 +53,4 @@ export const getAllUser = async (req: Request, res: Response) => {
   }
 };
 
-export const getAUser = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id, 10);
-  try {
-    const userObject = await getAUserModel(id);
-    return res.status(200).send({ message: "You have a your useer", data: userObject });
-  } catch (error) {
-    return res.status(200).send({ message: "Could not get the user" });
-  }
-};
+

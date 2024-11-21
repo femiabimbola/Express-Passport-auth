@@ -18,6 +18,7 @@ export const createUserModel = async (params: any) => {
   } 
 };
 
+
 export const getAllUserModel = async () => {
   try {
     const result = await pool.query("SELECT * FROM users ORDER BY id ASC");
@@ -27,9 +28,21 @@ export const getAllUserModel = async () => {
   } 
 };
 
-export const findAUser = async(email : string) => {
+
+export const findAUserByEmail = async(email : string) => {
   try {
     const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (rows) {
+      return rows[0];
+    }
+  } catch (error) {
+    return false;
+  }
+}
+
+export const findAUserByID = async(id : string) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
     if (rows) {
       return rows[0];
     }
@@ -50,14 +63,4 @@ export const findAphone = async(phone:number) =>{
   }
 }
 
-export const getAUserModel = async (id: number) => {
-  const queryText = "SELECT * FROM loans WHERE id = $1";
-  try {
-    // await client.connect().then(() => console.log("connected to postgres database"));
-    const result = await pool.query(queryText, [id]);
-    // client.end().then(() => console.log("Connection to PostgreSQL closed"));
-    return result.rows;
-  } catch (error) {
-    console.log(`error occured getting a user ${error}`);
-  }
-};
+

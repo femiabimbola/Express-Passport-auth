@@ -18,6 +18,8 @@ app.get("/", (req: Request, res: Response) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session(sessionObject))
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 app.use(routes);

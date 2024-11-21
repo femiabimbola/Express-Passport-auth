@@ -28,18 +28,4 @@ export const createloanValidationSchema = {
     isInt: { errorMessage: "only number allowed" },
   },
 
-  // paymentInstallment: {
-  //   notEmpty: { errorMessage: "tenor cannot be empty" },
-  //   isFloat: { errorMessage: "only number allowed" },
-  // },
-
-  // interest: {
-  //   notEmpty: { errorMessage: "tenor cannot be empty" },
-  //   isFloat: { errorMessage: "only number allowed" },
-  // },
-
-  // balance: {
-  //   notEmpty: { errorMessage: "tenor cannot be empty" },
-  // }
-
 };

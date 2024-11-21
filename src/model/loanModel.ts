@@ -60,3 +60,16 @@ export const getAllloanModel = async () => {
     console.log(`error occured getting all user ${error}`);
   }
 };
+
+
+export const getAUserModel = async (id: number) => {
+  const queryText = "SELECT * FROM loans WHERE id = $1";
+  try {
+    // await client.connect().then(() => console.log("connected to postgres database"));
+    const result = await pool.query(queryText, [id]);
+    // client.end().then(() => console.log("Connection to PostgreSQL closed"));
+    return result.rows;
+  } catch (error) {
+    console.log(`error occured getting a user ${error}`);
+  }
+};
