@@ -40,6 +40,7 @@ export const createUser = async (req: Request, res: Response) => {
 export const signIn = async (req: Request, res: Response) => {
   console.log(req.session) 
   console.log(req.session.id)
+  //Used the passport logic to sign ins
   return res.status(201).send({ msg: "You have successfully log in" });
 };
 

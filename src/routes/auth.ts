@@ -9,7 +9,7 @@ import "../utils/passportStrategy/localStrategy"
 const router = Router();
 
 router.post("/api/auth/register", checkSchema(createUserValidationSchema), createUser);
-router.post("/api/auth/login", passport.authenticate("local"),signIn)
+router.post("/api/auth/login", passport.authenticate("local"), signIn)
 router.get("/api/auth/users", getAllUser);
 
 export default router;

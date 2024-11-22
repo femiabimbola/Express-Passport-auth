@@ -11,7 +11,6 @@ passport.serializeUser((user:any, done) => {
 
 // The deserialize function take the id from session, and find who the user is.it get called afteruser sign in and call other routes
 passport.deserializeUser(async (id: string, done) => {
-  
   console.log(`inside deserialize user ${id}`);
   try {
     const findUser = await findAUserByID(id)
