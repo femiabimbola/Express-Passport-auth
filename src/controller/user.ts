@@ -44,8 +44,10 @@ export const signIn = async (req: Request, res: Response) => {
   return res.status(201).send({ msg: "You have successfully log in" });
 };
 
+
+export const verfiyEmail = async (req: Request, res: Response) => {}
+
 export const getAllUser = async (req: Request, res: Response) => {
- 
   try {
     const userObject = await getAllUserModel();
     return res.status(200).send({ message: "You have all your useer", data: userObject });
