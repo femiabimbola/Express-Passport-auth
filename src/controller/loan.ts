@@ -30,7 +30,6 @@ export const createLoan = async (req: Request, res: Response) => {
 };
 
 export const getAllLoan = async (req: Request, res: Response) => {
-  console.log(req.user)
   try {
     const userObject = await getAllloanModel();
     return res.status(200).send({ message: "You have all your loans", data: userObject });
