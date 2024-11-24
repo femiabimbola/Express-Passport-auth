@@ -40,17 +40,24 @@ export const findLoanByEmail = async (email: string) => {
 
 export const findLoanById = async (id: number) => {
   try {
-    const { rows } = await pool.query("SELECT * FROM loans WHERE id = $1", [
-      id,
-    ]);
-    if (rows) {
-      return rows[0];
-    }
+    const { rows } = await pool.query("SELECT * FROM loans WHERE id = $1", [id,]);
+    if (rows) return rows[0];
   } catch (error: any) {
     console.error(`Error in finding loan by id${error.message}`);
     return false;
   }
 };
+
+export const getUserIdfromLoanId = async(id: number) =>{
+  try {
+    const text = 'SELECT users.id FROM users INNER JOIN loans ON (users.email = loans.email) WHERE loans.id = $1';
+    const { rows } = await pool.query(text, [id]);
+    return rows[0].id;
+  } catch (error) {
+    console.log(`error occured getting user  from loan id ${error}`);
+  }
+
+}
 
 export const getAllloanModel = async () => {
   try {
@@ -61,15 +68,3 @@ export const getAllloanModel = async () => {
   }
 };
 
-
-export const getAUserModel = async (id: number) => {
-  const queryText = "SELECT * FROM loans WHERE id = $1";
-  try {
-    // await client.connect().then(() => console.log("connected to postgres database"));
-    const result = await pool.query(queryText, [id]);
-    // client.end().then(() => console.log("Connection to PostgreSQL closed"));
-    return result.rows;
-  } catch (error) {
-    console.log(`error occured getting a user ${error}`);
-  }
-};

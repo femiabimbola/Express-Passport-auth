@@ -1,5 +1,5 @@
 import { validationResult, matchedData } from "express-validator";
-import { createloanModel, getAllloanModel } from "../model/loanModel";
+import { createloanModel, findLoanByEmail, findLoanById, getAllloanModel, getUserIdfromLoanId } from "../model/loanModel";
 import { Request, Response, NextFunction, Router } from "express";
 import { loanPayment } from "../utils/loanUtils";
 
@@ -16,7 +16,6 @@ export const createLoan = async (req: Request, res: Response) => {
   const tenorInt = parseInt(tenor, 10);
 
   const { paymentInstallment, interest, balance } = loanPayment(amountInt, tenorInt);
-
   const newLoan = {
     firstname, lastname, email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
   };
@@ -38,6 +37,26 @@ export const getAllLoan = async (req: Request, res: Response) => {
   }
 };
 
-export const getAloan = async (req: Request, res: Response) => {
-  
+export const userLoan = async (req:any, res: Response) => {
+  const id  = parseInt(req.user?.id) 
+  if(!id) return res.status(200).send({ message: "Sign in to view your loan" })
+  const loan = await findLoanByEmail(req.user?.email)
+  return res.status(200).send({ message: "Your loans", data: loan });
+}
+
+export const getAloan = async (req: any, res: Response) => {
+  const id = parseInt(req.params.id);
+  const userId = parseInt(req.user?.id)
+  if(!userId) return res.status(200).send({ message: "Sign in to view your loan" })
+  try {
+  const loan = await findLoanById(id)
+  if(!loan) return res.status(200).send({ message: "There is no loan" });
+  const loanUserId = await getUserIdfromLoanId(id)
+  if (!req.user?.isAdmin) {
+    if (loanUserId !== userId) return res.status(200).send({ message: "Cannot access other loans" });
+  }
+  return res.status(201).send({ msg: "You have the loan you requested ", data: loan });
+  } catch (error) {
+    return res.status(200).send({ message: "Could not get all the loans" });
+  }
 }
