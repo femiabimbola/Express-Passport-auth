@@ -37,3 +37,7 @@ export const getAllLoan = async (req: Request, res: Response) => {
     return res.status(200).send({ message: "Could not get all the loans" });
   }
 };
+
+export const getAloan = async (req: Request, res: Response) => {
+  
+}

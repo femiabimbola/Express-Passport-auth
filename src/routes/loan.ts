@@ -8,5 +8,6 @@ const router = Router();
 
 router.post("/api/loan/create", checkSchema(createloanValidationSchema), verifyUser, createLoan);
 router.get("/api/loans/", verifyUser, getAllLoan);
+router.get('/api/loans/:id',)
 
 export default router;

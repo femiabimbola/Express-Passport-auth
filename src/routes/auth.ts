@@ -5,11 +5,12 @@ import { createUser, signIn, getAllUser } from "../controller/user";
 import { createUserValidationSchema } from "../validation/user";
 import passport from "passport";
 import "../utils/passportStrategy/localStrategy"
+import { verifyAdmin } from "../middleware/validateUser";
 
 const router = Router();
 
 router.post("/api/auth/register", checkSchema(createUserValidationSchema), createUser);
 router.post("/api/auth/login", passport.authenticate("local"), signIn)
-router.get("/api/auth/users", getAllUser);
+router.get("/api/auth/users", verifyAdmin, getAllUser);
 
 export default router;

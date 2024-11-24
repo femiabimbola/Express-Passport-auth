@@ -10,7 +10,6 @@ export const createUserModel = async (params: any) => {
     "INSERT INTO users (firstname, lastname, email, password, phone, address, status, isAdmin) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
 
   try {
-    console.log(firstName)
     const result = await pool.query(queryText, newUser);
     return result.rows;
   } catch (error) {
