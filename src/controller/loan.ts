@@ -20,7 +20,12 @@ export const createLoan = async (req: Request, res: Response) => {
     firstname, lastname, email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
   };
 
+  let ongoingLoan;
+
   try {
+    const userLoan = findLoanByEmail(email) as any
+    console.log(userLoan.length)
+    if (userLoan.length > 0) return res.status(201).send({ msg: "You have an ongoing loan, you can't request another loan" });
     const userObject = await createloanModel(newLoan);
     return res.status(201).send({ msg: "You have successfully created", data: userObject });
   } catch (error) {

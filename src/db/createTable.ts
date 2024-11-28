@@ -39,6 +39,12 @@ const createTables = `
     amount NUMERIC NOT NULL CHECK(amount > 0),
     createdon TIMESTAMP NOT NULL DEFAULT NOW()
   );
+
+    CREATE TABLE IF NOT EXISTS session (
+    sid SERIAL NOT NULL PRIMARY KEY,
+    session OBJECT NOT NULL,
+    expire TIMESTAMP NOT NULL,
+  );
 `;
 
 
