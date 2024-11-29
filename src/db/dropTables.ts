@@ -5,6 +5,7 @@ const dropTables = `
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS loans CASCADE;
 DROP TABLE IF EXISTS repayments CASCADE;
+DROP TABLE IF EXISTS session CASCADE;
 `;
 
 const dropDatabase =  () => {
@@ -16,7 +17,7 @@ const dropDatabase =  () => {
       if (err) {
         console.error("Error inserting data", err);
       } else {
-        console.log("Table deleted successfully");
+        console.log("Tables deleted successfully");
       }
    client.end();
     })

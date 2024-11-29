@@ -7,7 +7,7 @@
     "dev": "nodemon  src/index.ts",
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "createTable": "ts-node src/db/createTable.ts",
+    "createTables": "ts-node src/db/createTable.ts",
     "dropTables": "ts-node src/db/dropTables.ts",
     "connect": "ts-node src/db/index.ts"
   },

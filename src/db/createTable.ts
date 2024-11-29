@@ -2,6 +2,7 @@
 
 // import { dbclient } from "./index";
 import {client} from "./index"
+import { pool } from "./index";
 
 const createTables = `
   CREATE TABLE IF NOT EXISTS users (
@@ -40,10 +41,10 @@ const createTables = `
     createdon TIMESTAMP NOT NULL DEFAULT NOW()
   );
 
-    CREATE TABLE IF NOT EXISTS session (
+    CREATE TABLE IF NOT EXISTS sessions (
     sid SERIAL NOT NULL PRIMARY KEY,
-    session OBJECT NOT NULL,
-    expire TIMESTAMP NOT NULL,
+    session JSONB,
+    expire TIMESTAMP NOT NULL
   );
 `;
 
@@ -52,7 +53,7 @@ const createTables = `
     client.connect()
     .then(() => {
       console.log("connecred to postgres database")
-      client.query(createTables,(err, result) => 
+      pool.query(createTables,(err, result) => 
         {
         if (err) {
           console.error("Error inserting data", err);
