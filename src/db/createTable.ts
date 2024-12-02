@@ -41,9 +41,9 @@ const createTables = `
     createdon TIMESTAMP NOT NULL DEFAULT NOW()
   );
 
-    CREATE TABLE IF NOT EXISTS sessions (
-    sid SERIAL NOT NULL PRIMARY KEY,
-    session JSONB,
+    CREATE TABLE IF NOT EXISTS session (
+    sid VARCHAR(50) NOT NULL PRIMARY KEY,
+    sess JSONB,
     expire TIMESTAMP NOT NULL
   );
 `;
