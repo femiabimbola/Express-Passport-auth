@@ -5,13 +5,12 @@ import { findAUserByEmail, findAUserByID } from '../../model/userModel';
 
 // The serialize function create the user object and stores it in the session.it get called during user sign in
 passport.serializeUser((user:any, done) => {
-  // console.log(`inside serialize user`);
   done(null, user.id)
 })
 
 // The deserialize function take the id from session, and find who the user is.it get called afteruser sign in and call other routes
 passport.deserializeUser(async (id: string, done) => {
-  // console.log(`inside deserialize user ${id}`);
+
   try {
     const findUser = await findAUserByID(id)
     if (!findUser) throw new Error("user not found");

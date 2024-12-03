@@ -10,23 +10,32 @@ export const createLoan = async (req: Request, res: Response) => {
   }
   const data = matchedData(req);
   //find the way int wont be less than or more than
-  const { firstname, lastname, email, amount, tenor } = req.body;
+  // const { firstname, lastname, email, amount, tenor } = req.body;
 
+  const { amount, tenor } = req.body;
   const amountInt = parseInt(amount, 10);
   const tenorInt = parseInt(tenor, 10);
 
+ 
   const { paymentInstallment, interest, balance } = loanPayment(amountInt, tenorInt);
+ 
   const newLoan = {
-    firstname, lastname, email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
+     //@ts-ignore
+    firstname:req.user?.firstname, lastname:req.user?.lastname, email:req.user?.email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
   };
+  // const newLoan = {
+  //   firstname, lastname, email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
+  // };
 
   let ongoingLoan;
 
   try {
-    const userLoan = findLoanByEmail(email) as any
-    console.log(userLoan.length)
+    // const userLoan = findLoanByEmail(email) as any
+    //@ts-ignore
+    const userLoan = findLoanByEmail(req.user?.email) as any
+    // console.log(userLoan.length)
     if (userLoan.length > 0) return res.status(201).send({ msg: "You have an ongoing loan, you can't request another loan" });
-    console.log(ongoingLoan)
+    // console.log(ongoingLoan)
     const userObject = await createloanModel(newLoan);
     return res.status(201).send({ msg: "You have successfully created", data: userObject });
   } catch (error) {
