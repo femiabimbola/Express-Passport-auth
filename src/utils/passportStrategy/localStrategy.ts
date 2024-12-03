@@ -2,6 +2,7 @@ import passport from 'passport'
 import { Strategy } from 'passport-local'
 import bcrypt from "bcryptjs"
 import { findAUserByEmail, findAUserByID } from '../../model/userModel';
+import { User } from '../../../types';
 
 // The serialize function create the user object and stores it in the session.it get called during user sign in
 passport.serializeUser((user:any, done) => {
@@ -10,9 +11,8 @@ passport.serializeUser((user:any, done) => {
 
 // The deserialize function take the id from session, and find who the user is.it get called afteruser sign in and call other routes
 passport.deserializeUser(async (id: string, done) => {
-
   try {
-    const findUser = await findAUserByID(id)
+    const findUser = await findAUserByID(id) as User
     if (!findUser) throw new Error("user not found");
     done(null, findUser);
   } catch (error) {

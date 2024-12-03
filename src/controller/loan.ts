@@ -2,37 +2,32 @@ import { validationResult, matchedData } from "express-validator";
 import { createloanModel, findLoanByEmail, findLoanById, getAllloanModel, getUserIdfromLoanId } from "../model/loanModel";
 import { Request, Response, NextFunction, Router } from "express";
 import { loanPayment } from "../utils/loanUtils";
+import { UserRequest } from "../../types";
 
-export const createLoan = async (req: Request, res: Response) => {
+export const createLoan = async (req: any, res: Response) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
     return res.status(400).send({ error: result.array().map((err) => err) });
   }
   const data = matchedData(req);
-  //find the way int wont be less than or more than
   // const { firstname, lastname, email, amount, tenor } = req.body;
 
   const { amount, tenor } = req.body;
   const amountInt = parseInt(amount, 10);
   const tenorInt = parseInt(tenor, 10);
 
- 
   const { paymentInstallment, interest, balance } = loanPayment(amountInt, tenorInt);
- 
+
   const newLoan = {
-     //@ts-ignore
-    firstname:req.user?.firstname, lastname:req.user?.lastname, email:req.user?.email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
+    firstname:req.user!.firstname, lastname:req.user?.lastname, email:req.user?.email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
   };
-  // const newLoan = {
-  //   firstname, lastname, email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
-  // };
+
 
   let ongoingLoan;
 
   try {
     // const userLoan = findLoanByEmail(email) as any
-    //@ts-ignore
-    const userLoan = findLoanByEmail(req.user?.email) as any
+    const userLoan = findLoanByEmail(req.user!.email) as any
     // console.log(userLoan.length)
     if (userLoan.length > 0) return res.status(201).send({ msg: "You have an ongoing loan, you can't request another loan" });
     // console.log(ongoingLoan)
