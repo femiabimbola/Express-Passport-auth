@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, Router } from "express";
 import { checkSchema } from "express-validator";
 import { validationResult, matchedData } from "express-validator";
-import { createUser, signIn, getAllUser, signout } from "../controller/user";
+import { createUser, signIn, getAllUser, signout, verfiyEmail } from "../controller/user";
 import { createUserValidationSchema } from "../validation/user";
 import passport from "passport";
 import "../utils/passportStrategy/localStrategy"
@@ -13,5 +13,6 @@ router.post("/api/auth/register", checkSchema(createUserValidationSchema), creat
 router.post("/api/auth/login", passport.authenticate("local"), signIn)
 router.get("/api/auth/logout", signout),
 router.get("/api/auth/users", verifyAdmin, getAllUser);
+router.patch("/api/verify/:email", verfiyEmail )
 
 export default router;

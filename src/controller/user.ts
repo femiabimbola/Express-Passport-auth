@@ -63,9 +63,13 @@ export const signout = async (req: Request, res: Response) => {
 
 export const verfiyEmail = async (req: Request, res: Response) => {
   try {
-    
+    const { email } = req.params;
+    console.log(email)
+    const foundUser = await findAUserByEmail(email)
+    if(!foundUser) return res.status(400).send({ msg: "No user found, register" });
+    if (foundUser.status === 'verified') return res.status(400).send({ msg: "User is already verified" });
   } catch (error) {
-    
+    return res.status(200).send({ error: error, message: "Could not get verify User" });
   }
 }
 
