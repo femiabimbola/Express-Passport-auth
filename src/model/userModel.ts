@@ -50,6 +50,18 @@ export const findAUserByID = async(id : string) => {
   }
 }
 
+export const verifyUser = async(email:string) => {
+  try {
+    const value = 'verified';
+    const queryText = 'UPDATE users SET status = $1 WHERE email = $2 RETURNING *';
+    const { rows } = await pool.query(queryText, [value, email]);
+    if (rows) {
+      return rows[0];
+    }
+  } catch (error) {
+    return false;
+  }
+}
 
 export const findAphone = async(phone:number) =>{
   try {
