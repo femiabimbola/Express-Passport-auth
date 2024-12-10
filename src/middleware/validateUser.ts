@@ -13,3 +13,4 @@ export const verifyAdmin = ( req: any, res: Response, next: NextFunction) => {
   if (!isAdmin) return res.status(400).send({ msg: "You are not admin for this route" });
   next()
 }
+

@@ -45,23 +45,18 @@ export const signIn = async (req: Request, res: Response) => {
 };
 
 
-export const signout = async (req: Request, res: Response) => {
+export const signout = async (req: Request, res: Response, next: NextFunction ) => {
+  // req.logout();
   req.session.destroy((err) => {
-    if (err) console.log(err)
-    return res.redirect('/login');
+    if (err) return next(err)
+    // return res.redirect('/login');
   })
+  return res.status(200).send({ message: "successfully signed out" });
 }
- 
-// If user sign out
-// router.get('/logout', (req, res, next) => {
-//   req.logout();
-//   req.session.destroy((err) => {
-//     if (err) return next(err);
-//     return res.redirect('/login');
-//   });
-// })
+
 
 export const verfiyEmail = async (req: Request, res: Response) => {
+  // const confirmationLink = `http://localhost:3000/auth/new-verification?token=${token}`
   try {
     const { email } = req.params;
     console.log(email)

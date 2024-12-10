@@ -3,6 +3,8 @@ import { Strategy } from 'passport-local'
 import bcrypt from "bcryptjs"
 import { findAUserByEmail, findAUserByID } from '../../model/userModel';
 import { User } from '../../../types';
+import { Request, Response, NextFunction, Router } from "express";
+
 
 // The serialize function create the user object and stores it in the session.it get called during user sign in
 passport.serializeUser((user:any, done) => {
@@ -24,13 +26,17 @@ export default passport.use(
   new Strategy({usernameField:"email"}, async (username, password, done) =>{
     try{
       const findUser = await findAUserByEmail(username);
-      if(!findUser) throw new Error("user not found") 
+      if(!findUser) return done(null, false, { message: 'User is not found'})
       const passwordsMatch = await bcrypt.compare(password, findUser.password); 
-      if(!passwordsMatch) throw new Error("Invalid Password")
+      if(!passwordsMatch) return done(null, false, { message: 'Password does not match'})
+      if(findUser.status === 'unverified') {
+        console.log("send verification mail")
+        return done(null, false, { message: 'verification mail sent'})
+      }
       // The done has 3 arg! Check the docs
       done(null, findUser)
     }catch(error){
-        done(error, false)
+      done(error, false)
     }
   })
 )

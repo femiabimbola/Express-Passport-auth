@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, Router } from "express";
+import { Request, NextFunction, Router } from "express";
 import { checkSchema } from "express-validator";
 import { validationResult, matchedData } from "express-validator";
 import { createUser, signIn, getAllUser, signout, verfiyEmail } from "../controller/user";
