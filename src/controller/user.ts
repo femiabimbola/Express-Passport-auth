@@ -37,10 +37,15 @@ export const createUser = async (req: Request, res: Response) => {
   }
 };
 
-export const signIn = async (req: Request, res: Response) => {
-  // console.log(req.session) 
-  // console.log(req.session.id)
-  //Used the passport logic to sign in
+export const signIn = async (req: any, res: Response) => {
+  if (req.session && req.session.messages) {
+    res.locals.messages = req.session.messages;
+    req.session.messages = [];
+    console.log(req.flash)
+    console.log( res.locals.messages)
+    console.log( req.session.messages)
+    return res.status(401).send({ msg: res.locals.messages});
+  }
   return res.status(201).send({ msg: "You have successfully log in" });
 };
 
@@ -51,7 +56,7 @@ export const signout = async (req: Request, res: Response, next: NextFunction ) 
     if (err) return next(err)
     // return res.redirect('/login');
   })
-  return res.status(200).send({ message: "successfully signed out" });
+ return res.status(200).send({ message: "successfully signed out" });
 }
 
 
