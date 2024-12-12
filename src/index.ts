@@ -27,6 +27,7 @@ app.use((req: any, res:any, next) => {
   if (req.session && req.session.messages) { 
     res.locals.messages = req.session.messages; 
     req.session.messages = [];
+    console.log(res.locals.messages)
    } 
    next();
    });

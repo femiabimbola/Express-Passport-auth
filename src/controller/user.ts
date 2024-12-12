@@ -49,6 +49,11 @@ export const signIn = async (req: any, res: Response) => {
   return res.status(201).send({ msg: "You have successfully log in" });
 };
 
+export const sign = async (req: any, res: Response) => {
+  const messages = res.locals.messages || []; 
+  res.status(200).send({ messages });
+}
+
 
 export const signout = async (req: Request, res: Response, next: NextFunction ) => {
   // req.logout();
