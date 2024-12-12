@@ -21,18 +21,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session(sessionObject))
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(flash())
+// app.use(flash()) 
 
 app.use((req: any, res:any, next) => { 
   if (req.session && req.session.messages) { 
     res.locals.messages = req.session.messages; 
     req.session.messages = [];
-    console.log(res.locals.messages)
+    // console.log(res.locals.messages)
    } 
    next();
    });
-
-
 
 app.use(routes);
 

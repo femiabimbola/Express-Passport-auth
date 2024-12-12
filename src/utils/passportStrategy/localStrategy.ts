@@ -30,7 +30,7 @@ export default passport.use(
       const passwordsMatch = await bcrypt.compare(password, findUser.password); 
       if(!passwordsMatch) return done(null, false, { message: 'Password does not match'})
       if(findUser.status === 'unverified') {
-        console.log("send verification mail")
+        // console.log("send verification mail")
         return done(null, false, { message: 'verification mail sent'})
       }
       // The done has 3 arg! Check the docs

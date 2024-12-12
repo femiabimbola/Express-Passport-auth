@@ -11,8 +11,8 @@ const router = Router();
 
 router.post("/api/auth/register", checkSchema(createUserValidationSchema), createUser);
 router.post("/api/auth/login", passport.authenticate("local", {
-  // failureRedirect: '/login', 
-  failureMessage: true, failureFlash: true}), signIn)
+  // failureRedirect: '/login',   failureFlash: true,
+  failureMessage: true,}), signIn)
 
 router.get("/api/auth/login", sign )
 router.get("/api/auth/logout", signout),
