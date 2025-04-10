@@ -19,7 +19,8 @@ export const createLoan = async (req: any, res: Response) => {
   const { paymentInstallment, interest, balance } = loanPayment(amountInt, tenorInt);
 
   const newLoan = {
-    firstname:req.user!.firstname, lastname:req.user?.lastname, email:req.user?.email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
+    firstname:req.user!.firstname,
+     lastname:req.user?.lastname, email:req.user?.email, amount, tenor, status:"pending", repaid:"false", paymentInstallment, balance, interest 
   };
 
 

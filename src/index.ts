@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import routes from "./routes";
 import session from "express-session";
 import passport from "passport"
-import  flash from "connect-flash" //got no idea yet
+import cors from "cors"
 
 import { sessionObject } from "./utils/sessionObject";
 
@@ -21,13 +21,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session(sessionObject))
 app.use(passport.initialize())
 app.use(passport.session())
-// app.use(flash()) 
+
+
+ app.use(cors({
+  credentials: true, origin: ["http://localhost:3000", ""]
+ }))
+ 
 
 app.use((req: any, res:any, next) => { 
   if (req.session && req.session.messages) { 
     res.locals.messages = req.session.messages; 
     req.session.messages = [];
-    // console.log(res.locals.messages)
+    console.log(res.locals.messages)
    } 
    next();
    });
