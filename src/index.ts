@@ -6,6 +6,7 @@ import passport from "passport"
 import cors from "cors"
 
 import { sessionObject } from "./utils/sessionObject";
+import { pool } from "./db";
 
 dotenv.config();
 
@@ -39,6 +40,9 @@ app.use((req: any, res:any, next) => {
 
 app.use(routes);
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
+  await pool.query('select 1')
+  .then(() => console.log("database successfully connected"))
+  .catch(() => console.log("database could not successfully connect"))
 });
